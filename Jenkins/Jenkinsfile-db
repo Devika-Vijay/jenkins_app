@@ -8,7 +8,7 @@ pipeline {
     stage('Create project') {
     steps {
         sh """cd openshift
-oc login https://localhost:8443 --username developer --password developer --insecure-skip-tls-verify=true
+oc login https://punedevopsb35.conygre.com:8443 --username developer --password developer --insecure-skip-tls-verify=true
 if ! oc project ${projectName}
 then
   oc new-project ${projectName}
@@ -18,7 +18,7 @@ fi"""
     stage('Build add or update database configuration') {
       steps {
         sh """cd openshift
-oc login https://localhost:8443 --username developer --password developer --insecure-skip-tls-verify=true
+oc login https://punedevopsb35.conygre.com:8443 --username developer --password developer --insecure-skip-tls-verify=true
 oc project ${projectName}
 oc apply -f database-imagestream.yaml
 oc apply -f database-build.yaml
@@ -28,14 +28,14 @@ oc apply -f database-service.yaml"""
     }
     stage('Build database image') {
       steps {
-        sh """oc login https://localhost:8443 --username developer --password developer --insecure-skip-tls-verify=true
+        sh """oc login https://punedevopsb35.conygre.com:8443 --username developer --password developer --insecure-skip-tls-verify=true
 oc start-build database"""
       }
     }
     stage('Deploy database Container To Openshift') {
       steps {
         sh """cd openshift
-oc login https://localhost:8443 --username developer --password developer --insecure-skip-tls-verify=true
+oc login https://punedevopsb35.conygre.com:8443 --username developer --password developer --insecure-skip-tls-verify=true
 oc project ${projectName}
 oc apply -f database-deploymentconfig.yaml"""
       }
